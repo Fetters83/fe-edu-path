@@ -83,7 +83,7 @@ const LowestAttenders =  () => {
 
    if (loading){
     return(
-       <p className='text-center m-10 text-black font-bold'>No Data</p>
+       <p className='text-center m-10 text-black font-bold'>Loading</p>
     )
    }
 

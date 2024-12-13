@@ -3,8 +3,8 @@ import Chart from "react-apexcharts";
 import axios from "axios";
 
 const ResolutionRateChart = () => {
-  const [academicYears, setAcademicYears] = useState(["2021/22", "2020/21","2019/20"]); // Example dropdown options
-  const [yearGroups, setYearGroups] = useState([6, 5, 4,3,2,1]); // Example dropdown options
+  const [academicYears, setAcademicYears] = useState(["2021/22", "2020/21","2019/20"]); 
+  const [yearGroups, setYearGroups] = useState([6, 5, 4,3,2,1]); 
   const [selectedAcademicYear, setSelectedAcademicYear] = useState("2021/22");
   const [selectedYearGroup, setSelectedYearGroup] = useState(6);
   const [resolutionRate, setResolutionRate] = useState(0);
@@ -12,7 +12,7 @@ const ResolutionRateChart = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch initial data based on default dropdown values
+
     fetchResolutionRate(selectedAcademicYear, selectedYearGroup);
   }, []);
 
@@ -31,7 +31,7 @@ const ResolutionRateChart = () => {
 
       const data = response.data;
 
-      // Update state with the returned values
+
       setResolutionRate(data.resolutionRate);
       setLoading(false);
     } catch (err) {
@@ -78,7 +78,7 @@ const ResolutionRateChart = () => {
         Resolution Rate for {selectedAcademicYear}, Year Group {selectedYearGroup}
       </h2>
 
-      {/* Dropdowns */}
+ 
       <div className="flex gap-4 mb-4">
         <div>
           <label htmlFor="academicYear" className="block text-sm font-medium">
@@ -121,7 +121,7 @@ const ResolutionRateChart = () => {
         </div>
       </div>
 
-      {/* Chart */}
+ 
       <Chart
         options={chartOptions}
         series={chartSeries}

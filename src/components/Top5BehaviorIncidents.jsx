@@ -34,7 +34,7 @@ const Top5BehaviorIncidents =  () => {
                 
                                 
                 let params = {academicYear:year,yearGroup:schoolYear}
-                console.log(params) 
+                
                 const data = await getTop5Behaviors( params )
                setBehaviorData(data)
 
