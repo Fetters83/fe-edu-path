@@ -23,17 +23,13 @@ const Sidebar = () => {
             <h2 className="block px-4 py-2">Behaviors</h2>
             </div>
           <li>
-            <a href="#" className="block px-4 py-4 hover:bg-gray-700">
-              View Behavior Logs
-            </a>
+          <Link to={'/behavior-logs'} className="block px-4 py-4 hover:bg-gray-700" >View Behavior Logs</Link>
           </li>
          <div className="bg-white text-gray-800 font-bold">
             <h2 className="block px-4 py-2">Suggestions</h2>
             </div>
           <li>
-            <a href="#" className="block px-4 py-4 hover:bg-gray-700">
-              View Suggestions
-            </a>
+          <Link to={'/suggestions'} className="block px-4 py-4 hover:bg-gray-700" >View Suggestions</Link>
           </li>
           <div className="bg-white text-gray-800 font-bold">
             <h2 className="block px-4 py-2">Metrics</h2>
@@ -45,11 +41,9 @@ const Sidebar = () => {
           <Link to={'/insights/behavior'} className="block px-4 py-4 hover:bg-gray-700" >Behavior</Link>
           </li>
           <li>
-            <a href="#" className="block px-4 py-4 hover:bg-gray-700">
-             Engagement
-            </a>
+          <Link to={'/insights/grades'} className="block px-4 py-4 hover:bg-gray-700" >Grades</Link>
           </li>
-        </ul>
+         </ul>
       </nav>
     </div>
   );

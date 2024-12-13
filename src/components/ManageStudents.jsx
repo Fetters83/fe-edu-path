@@ -1,38 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
+import { getAllStudentData } from "../../api";
 
 const ManageStudents = () => {
-  const data = [
-    { id: 1, name: "Alice", age: 20, grade: "A" },
-    { id: 2, name: "Bob", age: 22, grade: "B" },
-    { id: 3, name: "Charlie", age: 21, grade: "C" },
-  ];
+  const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const studentData = await getAllStudentData();
+        setStudents(studentData);
+        setFilteredStudents(studentData);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch student data");
+        setLoading(false);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+  useEffect(() => {
+    const filteredData = students.filter((student) => {
+      const searchString = search.toLowerCase();
+      return (
+        student.studentId.toString().includes(searchString) ||
+        `${student.firstName} ${student.lastName}`
+          .toLowerCase()
+          .includes(searchString) ||
+        student.yearGroup.toString().includes(searchString) ||
+        student.Class.toLowerCase().includes(searchString) ||
+        student.parentContactName.toLowerCase().includes(searchString)
+      );
+    });
+    setFilteredStudents(filteredData);
+  }, [search, students]);
+
+  const handleView = (row) => {
+    navigate(`/students/${row.studentId}`); 
+  };
+
+  const handleEdit = (row) => {
+    navigate(`/students/${row.studentId}/edit`); 
+  };
 
   const columns = [
     {
+      name: "Student ID",
+      selector: (row) => row.studentId,
+      sortable: true,
+    },
+    {
       name: "Name",
-      selector: (row) => row.name,
+      selector: (row) => `${row.firstName} ${row.lastName}`,
       sortable: true,
     },
     {
-      name: "Age",
-      selector: (row) => row.age,
+      name: "Year Group",
+      selector: (row) => row.yearGroup,
       sortable: true,
     },
     {
-      name: "Grade",
-      selector: (row) => row.grade,
+      name: "Class",
+      selector: (row) => row.Class,
     },
     {
       name: "Actions",
       cell: (row) => (
         <div className="flex gap-2">
-          <button
-            onClick={() => handleEdit(row)}
-            className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
-          >
-            Edit
-          </button>
           <button
             onClick={() => handleView(row)}
             className="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600"
@@ -40,55 +82,50 @@ const ManageStudents = () => {
             View
           </button>
           <button
-            onClick={() => handleDelete(row)}
-            className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+            onClick={() => handleEdit(row)}
+            className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
           >
-            Delete
+            Edit
           </button>
         </div>
       ),
     },
   ];
 
-  const handleEdit = (row) => {
-    alert(`Edit ${row.name}`);
-  };
+  if (loading) {
+    return <div className="p-4">Loading...</div>;
+  }
 
-  const handleView = (row) => {
-    alert(`View ${row.name}`);
-  };
-
-  const handleDelete = (row) => {
-    alert(`Delete ${row.name}`);
-  };
+  if (error) {
+    return <div className="p-4 text-red-500">{error}</div>;
+  }
 
   return (
     <div className="flex-1 p-4">
-  <div className="p-4 bg-white shadow rounded">
-      <h1 className="text-2xl font-bold mb-4">Manage Students</h1>
-      <DataTable
-        columns={columns}
-        data={data}
-        pagination
-        className="bg-gray-50"
-        customStyles={{
-          headRow: {
-            style: {
-              backgroundColor: "#f9fafb",
-              borderBottom: "1px solid #e5e7eb",
-            },
-          },
-          rows: {
-            style: {
-              borderBottom: "1px solid #e5e7eb",
-            },
-          },
-        }}
-      />
+      <div className="p-4 bg-white shadow rounded">
+        <h1 className="text-2xl font-bold mb-4">Manage Students</h1>
+
+
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Search by Name, ID, Year Group, Class, or Parent Contact"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        <DataTable
+          columns={columns}
+          data={filteredStudents}
+          pagination
+          className="bg-gray-50"
+        />
+      </div>
     </div>
-    </div>
-  
   );
 };
 
 export default ManageStudents;
+

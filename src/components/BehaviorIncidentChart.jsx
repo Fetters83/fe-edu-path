@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import Chart from 'react-apexcharts'; // Example chart library
+import Chart from 'react-apexcharts'; 
 import { getBehaviorIncidents } from '../../api';
 
 const IncidentChart = () => {
-  // State for chart data
+
   const [categories, setCategories] = useState([]);
   const [series, setSeries] = useState([]);
-  const [loading, setLoading] = useState(true); // To handle loading state
-  const [error, setError] = useState(null); // To handle error state
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     const fetchIncidentData = async () => {
       try {
-        // Fetch data from the API
+    
         const responseBody = await getBehaviorIncidents();
 
-        // Transform the data for the chart
+    
         const groupedData = {};
         responseBody.forEach((entry) => {
           const { academicYear, severity, incidentCount } = entry;
@@ -28,13 +28,13 @@ const IncidentChart = () => {
           groupedData[severity][academicYear] += incidentCount;
         });
 
-        // Prepare categories (distinct academic years)
+     
         const uniqueCategories = Array.from(
           new Set(responseBody.map((entry) => entry.academicYear))
         ).sort();
         setCategories(uniqueCategories);
 
-        // Prepare series data
+     
         const transformedSeries = Object.keys(groupedData).map((severity) => ({
           name: severity,
           data: uniqueCategories.map(
@@ -43,15 +43,15 @@ const IncidentChart = () => {
         }));
         setSeries(transformedSeries);
 
-        setLoading(false); // Set loading to false when data is ready
+        setLoading(false); 
       } catch (err) {
-        setError('Failed to fetch data'); // Set error message
-        setLoading(false); // Stop loading spinner
+        setError('Failed to fetch data'); 
+        setLoading(false); 
       }
     };
 
     fetchIncidentData();
-  }, []); // Run only once on component mount
+  }, []); 
 
   const options = {
     chart: {
@@ -82,7 +82,7 @@ const IncidentChart = () => {
       text: 'Incident Counts by Severity and Year',
     },
     xaxis: {
-      categories: categories, // Dynamic categories from state
+      categories: categories, 
     },
     yaxis: {
       title: {
@@ -108,11 +108,10 @@ const IncidentChart = () => {
 
  
 
-  // Show a loading spinner or error message if necessary
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
-  // Render the chart with series as a prop
+
   return (
     <div className='h-full w-full'>
       <Chart options={options} series={series} type="bar" width="100%"  />

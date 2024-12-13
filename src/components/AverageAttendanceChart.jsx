@@ -31,19 +31,19 @@ function AverageAttendanceChart() {
       id: "basic-bar",
     },
     xaxis: {
-      categories: xAxis.length > 0 ? xAxis : ["Loading..."], // Default placeholder
+      categories: xAxis.length > 0 ? xAxis : ["Loading..."], 
     },
   };
 
   const series = [
     {
       name: "Average Attendance",
-      data: yAxis.length > 0 ? yAxis : [0], // Default placeholder
+      data: yAxis.length > 0 ? yAxis : [0], 
     },
   ];
 
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-[400px] overflow-hidden">
       {xAxis.length > 0 && yAxis.length > 0 ? (
         <div className="w-full h-full">
           <Chart options={options} series={series} type="bar" width="100%" height="100%" />
