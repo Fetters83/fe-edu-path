@@ -3,49 +3,50 @@ import { Link } from "react-router";
 
 const Sidebar = () => {
   return (
-    <div className="h-screen w-64 bg-gray-800 text-white  flex flex-col">
-      <div className="p-4 text-2xl font-bold">EduPath</div>
+    <section className="w-64 p-4 bg-gray-600">
+    <section className="flex justify-evenly">
       <nav className="flex-1">
-        <ul className="space-y-2">
-          <li>
-            <div className="bg-white text-gray-800 font-bold border-s-gray-700">
-            <h2 className="block px-4 py-2">Students</h2>
-            </div>
-            <Link to={'/students'} className="block px-4 py-4 hover:bg-gray-700" >Manage Students</Link>
-           {/*  */}
-          </li>
-          <li>
-            <a href="#" className="block px-4 py-4 hover:bg-gray-700">
-              Add Student
-            </a>
-          </li>
-          <div className="bg-white text-gray-800 font-bold">
-            <h2 className="block px-4 py-2">Behaviors</h2>
-            </div>
-          <li>
-          <Link to={'/behavior-logs'} className="block px-4 py-4 hover:bg-gray-700" >View Behavior Logs</Link>
-          </li>
-         <div className="bg-white text-gray-800 font-bold">
-            <h2 className="block px-4 py-2">Suggestions</h2>
-            </div>
-          <li>
-          <Link to={'/suggestions'} className="block px-4 py-4 hover:bg-gray-700" >View Suggestions</Link>
-          </li>
-          <div className="bg-white text-gray-800 font-bold">
-            <h2 className="block px-4 py-2">Metrics</h2>
-            </div>
-          <li>
-           <Link to={'/insights/academic'} className="block px-4 py-4 hover:bg-gray-700" >Attendance</Link>
-          </li>
-          <li>
-          <Link to={'/insights/behavior'} className="block px-4 py-4 hover:bg-gray-700" >Behavior</Link>
-          </li>
-          <li>
-          <Link to={'/insights/grades'} className="block px-4 py-4 hover:bg-gray-700" >Grades</Link>
-          </li>
-         </ul>
+      <ul className="space-y-2 p-0 m-0">
+            <li className="p-4 m-3 text-white font-bold text-2xl">
+                <h1 >EduPath</h1>
+            </li>
+            <li className="p-0 m-0 text-gray-600 text-xl font-bold bg-white text-center">
+                <h1>Students</h1>
+            </li>
+            <li className="p-4 m-3 text-white font-bold">
+            <Link to={'/students'} className="block py-2 " >Manage Students</Link>
+            </li>
+            <li className="p-0 m-0 text-gray-600 text-xl font-bold bg-white text-center">
+                <h1>Behavior</h1>
+            </li>
+            <li className="p-4 m-3 text-white font-bold">
+            <Link to={'/behavior-logs'} className="block py-2 " >Behavior Logs</Link>
+            </li>
+            <li className="p-0 m-0 text-gray-600 text-xl font-bold bg-white text-center">
+                <h1>Suggestions</h1>
+            </li>
+            <li className="p-4 m-3 text-white font-bold">
+            <Link to={'/suggestions'} className="block py-2 " >Suggestion Logs</Link>
+            </li>
+            <li className="p-0 m-0 text-gray-600 text-xl font-bold bg-white text-center">
+                <h1>Insights</h1>
+            </li>
+            <li className="p-4 m-3 text-white font-bold">
+            <Link to={'/insights/academic'} className="block py-2 " >Academic</Link>
+            </li> 
+            <li className="p-4 m-3 text-white font-bold">
+            <Link to={'/insights/behavior'} className="block py-2 " >Behavior</Link>
+            </li>
+            <li className="p-4 m-3 text-white font-bold">
+            <Link to={'/insights/grades'} className="block py-2 " >Grades</Link>
+            </li> 
+       
+        </ul>
       </nav>
-    </div>
+    
+    </section>
+
+</section>
   );
 };
 

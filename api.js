@@ -124,7 +124,7 @@ export const getResolutionRates = async ()=>{
 
     try {
         const result = await axios.get(`https://be-edu-path.onrender.com/api/behavioralMetrics/top5BehaviorIncidents`,{params} )
-        console.log(result.data.results)
+       
         return result.data.results
     } catch (error) {
         console.log(error)

@@ -9,19 +9,28 @@ const SuggestionsTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
+  
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
+        //fetch results from function getSuggestions
         const data = await getSuggestions(); 
+        //store suggestions against the state variable suggestions
         setSuggestions(data);
+        //also store the suggestions against the state variable filteredSuggestions for use in the filter
         setFilteredSuggestions(data); 
+        //now the db operation is completed - set the loading state variable to false - conditional html will not longer render 'loading' on the page
         setLoading(false);
       } catch (err) {
+        //on failure set the error state variable to the below string
         setError("Failed to fetch suggestions");
+        // after error set the loading state variable to false - conditional html will not longer render 'loading' on the page
         setLoading(false);
       }
     };
 
+    //run the async function fetchSuggestions once on page render 
     fetchSuggestions();
   }, []);
 

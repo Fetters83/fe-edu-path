@@ -9,22 +9,27 @@ const BehaviorLogsTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  //fetch all beahvior logs from the api on first render
   useEffect(() => {
     const fetchBehaviorLogs = async () => {
       try {
         const data = await getBehaviorLogs(); 
+        //set the data for behavior logs
         setBehaviorLogs(data);
+        //also set the data for filtered values
         setFilteredLogs(data); 
+        //set loading to false
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch behavior logs");
         setLoading(false);
       }
     };
-
+    //run the function
     fetchBehaviorLogs();
   }, []);
 
+  //re render page when filtered data contains contents of the search string
   useEffect(() => {
     const filteredData = behaviorLogs.filter((log) => {
       const searchString = search.toLowerCase();
@@ -40,9 +45,11 @@ const BehaviorLogsTable = () => {
         (log.status || "Pending").toLowerCase().includes(searchString)
       );
     });
+    //set the filtered logs
     setFilteredLogs(filteredData);
   }, [search, behaviorLogs]);
 
+  //set the column data
   const columns = [
     {
       name: "Behavior Log ID",
@@ -97,11 +104,11 @@ const BehaviorLogsTable = () => {
           : "Not Resolved",
     },
   ];
-
+//return a loading screen if state is still loading
   if (loading) {
     return <div>Loading...</div>;
   }
-
+//return an error screen if state is still loading
   if (error) {
     return <div className="text-red-500">{error}</div>;
   }

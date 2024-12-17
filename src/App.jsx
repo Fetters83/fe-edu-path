@@ -33,7 +33,7 @@ function App() {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen">
       <Sidebar />
       <Routes>
         <Route path="/" element={<HomePage />} />
