@@ -7,34 +7,39 @@ function AverageAttendanceChart() {
   const [xAxis, setXAxis] = useState([]);
   const [yAxis, setYAxis] = useState([]);
 
+  //render fetch of api average attendance data
   useEffect(() => {
     const fetchAverageAttendance = async () => {
       try {
+
+        //set chartData
         const response = await getAverageAttendance();
         setChartData(response);
-
+        //set values for x axis
         const xArray = response.map((x) => x.academicYear);
         setXAxis(xArray);
-
+        //set values for y axis
         const yArray = response.map((y) => y.averageAttendance);
         setYAxis(yArray);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+    //execute function
     fetchAverageAttendance();
   }, []);
 
+  //set apex chart options
   const options = {
     chart: {
       id: "basic-bar",
     },
+    //if data has not rendered yet, set x axis labels to 'loading...'
     xaxis: {
       categories: xAxis.length > 0 ? xAxis : ["Loading..."], 
     },
   };
-
+  //set y axis data and number to the data fetched for the y axis
   const series = [
     {
       name: "Average Attendance",

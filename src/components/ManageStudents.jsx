@@ -81,12 +81,7 @@ const ManageStudents = () => {
           >
             View
           </button>
-          <button
-            onClick={() => handleEdit(row)}
-            className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
-          >
-            Edit
-          </button>
+    
         </div>
       ),
     },

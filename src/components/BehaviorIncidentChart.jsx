@@ -9,15 +9,17 @@ const IncidentChart = () => {
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
 
+  //render fetch of api behavior incident data
   useEffect(() => {
     const fetchIncidentData = async () => {
       try {
-    
-        const responseBody = await getBehaviorIncidents();
+        //fetch data
+        const response = await getBehaviorIncidents();
 
-    
+        //create empty object for grouped data
         const groupedData = {};
-        responseBody.forEach((entry) => {
+        //loop through each object from the result and count records against all academic years and severities
+        response.forEach((entry) => {
           const { academicYear, severity, incidentCount } = entry;
           if (!groupedData[severity]) {
             groupedData[severity] = {};
@@ -28,28 +30,36 @@ const IncidentChart = () => {
           groupedData[severity][academicYear] += incidentCount;
         });
 
-     
+        
+        //create new array for unique categories
         const uniqueCategories = Array.from(
-          new Set(responseBody.map((entry) => entry.academicYear))
+          //remove duplicates of academic year and sort
+          new Set(response.map((entry) => entry.academicYear))
         ).sort();
+        //set the state of unique categories
         setCategories(uniqueCategories);
+        
 
-     
+     //map through objects in the grouped data
         const transformedSeries = Object.keys(groupedData).map((severity) => ({
+          //set key as name of severity in the iteration
           name: severity,
+          //map through the uniqueCategories to set the data array for the severity and the year
           data: uniqueCategories.map(
             (year) => groupedData[severity][year] || 0
           ),
         }));
+        //set the series needed for the chart
         setSeries(transformedSeries);
 
+        //set loading to false
         setLoading(false); 
       } catch (err) {
         setError('Failed to fetch data'); 
         setLoading(false); 
       }
     };
-
+    //run the function
     fetchIncidentData();
   }, []); 
 

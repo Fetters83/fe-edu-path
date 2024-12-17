@@ -10,7 +10,7 @@ const EditStudent = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
- 
+ //fetch student by id from the API on change of id parameters
   useEffect(() => {
     const fetchStudent = async () => {
       try {
@@ -26,6 +26,7 @@ const EditStudent = () => {
     fetchStudent();
   }, [id]);
 
+  //handle 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const updatedValue = name === "parentContactPhone" ? String(value) : value;

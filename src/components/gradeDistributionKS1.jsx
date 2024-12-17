@@ -13,32 +13,39 @@ const GradeDistrubutionKS1Chart = () => {
     const [loading, setLoading] = useState(false); 
     const [error, setError] = useState(null); 
   
-  
+  //fetch KS1 distrubution data from API
     useEffect(() => {
 
         try {
 
             const fetchKS1GradeDistributionData = async()=>{
+              //get all student data
                 const allData = await getAllStudentData()
+                //create an array with unique academic year values
                 const accYearsArr = allData.map(record=>record.academicYear)
                 let setAccYearsArr = new Set(accYearsArr)
                 let uniqueAccYears = [...setAccYearsArr]
                 uniqueAccYears.sort()
+                //add unique years to drop down
                 setDropDownAccYears(uniqueAccYears)
           
-
+                //create an array with year group values
                 const yearGroupArr = allData.map(record=>record.yearGroup)
                 let setYearGroupArr = new Set(yearGroupArr)
                 let uniqueYearGroups = [...setYearGroupArr]
                 uniqueYearGroups.sort()
+                //add unique year groups to drop down
                 setDropDownYearGroups(uniqueYearGroups)
-               
+                //create hardcoded array of KS1 score categories as per the API
                 const grades = ["ReadingBESCount","ReadingWESCount","MathsBESCount","MathsWESCount","GpsBESCount","GpsWESCount"]
 
-               
+               //create series data array to store the values on each itertion of retrieving the KS1 grade distribution data
+               //will be emptied after each iteration
                 let seriesData = []
+                //create empty array to store the final data in the series needed for the chart
                 let seriesArr = []
 
+                //iterate through the academic years array and fetch the results based on the unique years array
                 for(let i =0; i<grades.length;i++){
                     for(let i = 0 ;i<uniqueAccYears.length;i++){
                         const uniqueYear = uniqueAccYears[i]

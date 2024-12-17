@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
- import { getAllStudentData, getLowestAttenders, getTop5Behaviors} from '../../api'; 
+import { getAllStudentData, getLowestAttenders, getTop5Behaviors} from '../../api'; 
 
 
 
@@ -30,7 +30,7 @@ const LowestAttenders =  () => {
                 let uniqueAccYears = [...setAccYearsArr]
                 uniqueAccYears.sort()
                 setDropDownAccYears(uniqueAccYears)
-                console.log(dropDownAccYears)
+             
 
          
 
@@ -46,7 +46,7 @@ const LowestAttenders =  () => {
                                 
                 let params = {academicYear:year,Class:ClassNumber,term:term}
                 const data = await getLowestAttenders(params)
-                console.log(data)
+            
                 setLowestAttenderData(data)
                setLoading(false)
 
@@ -78,6 +78,7 @@ const LowestAttenders =  () => {
         if(selectedOption==='Autumn Term') setTerm('attendance_autumnTerm')
         if(selectedOption==='Spring Term') setTerm('attendance_springTerm')
         if(selectedOption==='Summer Term') setTerm('attendance_summerTerm')
+        
     }
 
 
@@ -133,7 +134,7 @@ const LowestAttenders =  () => {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="Class" className="block text-sm font-medium">
+                  <label htmlFor="term" className="block text-sm font-medium">
                     Term
                   </label>
                   <select
